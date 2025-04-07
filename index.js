@@ -1,3 +1,8 @@
+// Global variable
+
+// global scope
+let humanScore = 0;
+let computerScore = 0;
 
 // This is a shorthand version of the active code below //
 // function getComputerChoice() {
@@ -12,15 +17,13 @@
         
 //         }
 
-// global scope
-let humanScore = 0;
-let computerScore = 0;
+
 
 // the logic to get the computer choice
 function getComputerChoice() {
-    const choice0 = 'Rocks';
-    const choice1 = 'Paper';
-    const choice2 = 'Scissors';
+    const choice0 = 'rock';
+    const choice1 = 'paper';
+    const choice2 = 'scissors';
 
     const randomNum = Math.floor(Math.random() * 3);
 
@@ -34,24 +37,6 @@ function getComputerChoice() {
 
 }
 
-// the logic to get the human choice
-function getHumanChoice() {
-    const userChoice = prompt("Enter Rocks, Paper or Scissors:");
-
-    return userChoice
-}
-
-function playRound(humanChoice, computerChoice) {
-    
-}
-
-const humanSelection = getHumanChoice;
-const computerSelection = getComputerChoice;
-
-
-console.log(getComputerChoice());
-console.log(getHumanChoice());
-
 // ^^^ PSEUDOCODE (the way I understand it):
 //      create a function that get the computer choice.
 //      inside the function assign a value to 'Rocks', 'Paper', 'Scissors'.
@@ -60,3 +45,81 @@ console.log(getHumanChoice());
 //      else if the random number is equal to 1, return the value 'Paper'.
 //      else just return the value 'Scissors' if the random number is neither. 
 //      output function to the console.
+
+// the logic to get the human choice
+function getHumanChoice() {
+    let choice = prompt('Enter Rock, Paper, or Scissors').toLowerCase();
+
+    while (choice !== 'rock' && choice !=='paper' && choice !=='scissors'){
+        choice = prompt('Invalid! you MUST enter Rock, Paper, or  Scissors');
+    } 
+    return choice;
+}
+
+
+
+function playRound(humanSelection, computerSelection){
+
+    if (humanSelection === computerSelection){
+        return 'It a tie!';
+    }else if (
+        (humanSelection === 'rock' && computerSelection === 'scissors') || 
+        (humanSelection === 'paper' && computerSelection === 'rock') || 
+        (humanSelection === 'scissors' && computerSelection === 'paper')
+    ){
+        humanScore++;
+        return 'You Win!';
+    } else {
+        computerScore++;
+        return 'You Lose!';
+    }
+    
+}
+
+
+function playGame(){
+    for (let round = 1; round <= 5; round++){
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+        console.log(`Round ${round}`);
+
+        console.log(`You chose: ${humanSelection}`);
+        console.log(`Computer chose: ${computerSelection}`);
+
+        const result = playRound(humanSelection, computerSelection);
+        console.log(result);
+        console.log(`Score => ${humanScore} | ${computerScore}`) 
+        console.log('-----------------------------------------')
+
+        
+    }
+}
+
+
+
+// console.log(getComputerChoice());
+// console.log(getHumanChoice());
+
+console.log(playGame());
+
+//Final Result
+console.log('Game Over!');
+console.log('FINAL SCORE');
+console.log(`Human score: ${humanScore}    |    Computer Score: ${computerScore}`);
+
+if (humanScore > computerScore){
+    console.log('You won best out of 5!')
+}else if (computerScore > humanScore){
+    console.log('The computer won best out of 5!')
+}else {
+    console.log('It was an overall tie!')
+}
+
+
+
+// The order of execution (< IMPORTANT) matters in JavaScript.
+// The console prints exactly what the values are at the moment you call console.log().
+// It's totally fine to have the score print in the middle, top, or bottom of your code — as long as it comes after the function that updates the score.
+
+
